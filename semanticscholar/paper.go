@@ -10,7 +10,7 @@ type Paper struct {
 	CitationCount int      `json:"citationCount,omitempty"`
 	Authors       []Author `json:"author"`
 }
-type PaperSearcgResponse struct {
+type PaperSearchResponse struct {
 	Total  int     `json:"total"`
 	Offset int     `json:"offset"`
 	Next   int     `json:"nxt,omitempty"`

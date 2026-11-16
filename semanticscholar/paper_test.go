@@ -31,7 +31,7 @@ func TestSearchPapers(t *testing.T) {
 				t.Errorf("expected empty API key, got %q", got)
 			}
 
-			response := PaperSearcgResponse{
+			response := PaperSearchResponse{
 				Total:  1,
 				Offset: 0,
 				Data: []Paper{
@@ -122,7 +122,7 @@ func TestSearchPapersPagenation(t *testing.T) {
 				t.Errorf("expected offset 40, got %s", got)
 			}
 
-			response := PaperSearcgResponse{
+			response := PaperSearchResponse{
 				Total:  100,
 				Offset: 40,
 				Data:   []Paper{},
@@ -212,7 +212,7 @@ func TestSearchPapersCustomFields(t *testing.T) {
 				)
 			}
 
-			response := PaperSearcgResponse{
+			response := PaperSearchResponse{
 				Total: 1,
 				Data: []Paper{
 					{

@@ -25,7 +25,7 @@ func (c *Client) SearchPapers(
 	limit int,
 	offset int,
 	fields ...string,
-) (*PaperSearcgResponse, error) {
+) (*PaperSearchResponse, error) {
 	if query == "" {
 		return nil, fmt.Errorf("search query cannot be empty.")
 	}
@@ -63,7 +63,7 @@ func (c *Client) SearchPapers(
 	params.Set("offset", strconv.Itoa(offset))
 	params.Set("fields", strings.Join(fields, ","))
 
-	var result PaperSearcgResponse
+	var result PaperSearchResponse
 
 	err := c.get(
 		ctx,
