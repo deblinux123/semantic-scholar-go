@@ -17,7 +17,7 @@ const (
 )
 
 type Client struct {
-	httpClinet *http.Client
+	httpCleint *http.Client
 	apiKey     string
 	baseURL    string
 }
@@ -26,7 +26,7 @@ type ClientOption func(*Client)
 
 func NewClient(options ...ClientOption) *Client {
 	client := &Client{
-		httpClinet: &http.Client{
+		httpCleint: &http.Client{
 			Timeout: DefaultTimeout,
 		},
 		baseURL: BaseURL,
@@ -41,7 +41,7 @@ func NewClient(options ...ClientOption) *Client {
 
 func WithTimeout(timeout time.Duration) ClientOption {
 	return func(c *Client) {
-		c.httpClinet.Timeout = timeout
+		c.httpCleint.Timeout = timeout
 	}
 }
 
@@ -102,7 +102,7 @@ func (c *Client) get(
 		req.Header.Set("x-api-key", c.apiKey)
 	}
 
-	resp, err := c.httpClinet.Do(req)
+	resp, err := c.httpCleint.Do(req)
 
 	if err != nil {
 		return fmt.Errorf("send request: %w", err)
