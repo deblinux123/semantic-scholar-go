@@ -22,7 +22,7 @@ type Author struct {
 	Name     string `json:"name"`
 }
 
-type AutorSearchResponse struct {
+type AuthorSearchResponse struct {
 	Total  int      `json:"total"`
 	Offset int      `json:"offset"`
 	Next   *int     `json:"next"`
