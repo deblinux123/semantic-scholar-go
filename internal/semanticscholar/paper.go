@@ -1,0 +1,24 @@
+package semanticscholar
+
+type Paper struct {
+	PaperID       string   `json:"paperId"`
+	Title         string   `json:"title"`
+	Abstract      string   `json:"abstract,omitempty"`
+	Year          int      `json:"year"`
+	URL           string   `json:"url"`
+	Venue         string   `json:"venue,omitempty"`
+	CitationCount int      `json:"citationCount,omitempty"`
+	Authors       []Author `json:"author"`
+}
+
+type Author struct {
+	AuthorID string `json:"authorId"`
+	Name     string `json:"name"`
+}
+
+type PaperSearcgResponse struct {
+	Total  int     `json:"total"`
+	Offset int     `json:"offset"`
+	Next   int     `json:"nxt,omitempty"`
+	Data   []Paper `json:"data"`
+}
