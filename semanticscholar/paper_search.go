@@ -94,10 +94,10 @@ func validatePaperFields(fileds []string) error {
 
 func (c *Client) GetPaper(
 	ctx context.Context,
-	paperId string,
+	paperID string,
 	fields ...string,
 ) (*Paper, error) {
-	if strings.TrimSpace(paperId) == "" {
+	if strings.TrimSpace(paperID) == "" {
 		return nil, fmt.Errorf("paper ID cannot be empty.")
 	}
 
@@ -123,7 +123,7 @@ func (c *Client) GetPaper(
 
 	var paper Paper
 
-	path := "/paper/" + url.PathEscape(paperId)
+	path := "/paper/" + url.PathEscape(paperID)
 
 	if err := c.get(ctx, path, params, &paper); err != nil {
 		return nil, err

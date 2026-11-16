@@ -8,7 +8,7 @@ type Paper struct {
 	URL           string   `json:"url"`
 	Venue         string   `json:"venue,omitempty"`
 	CitationCount int      `json:"citationCount,omitempty"`
-	Authors       []Author `json:"author"`
+	Authors       []Author `json:"authors"`
 }
 type PaperSearchResponse struct {
 	Total  int     `json:"total"`

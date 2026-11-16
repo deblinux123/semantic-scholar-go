@@ -57,10 +57,10 @@ func (c *Client) SearchAuthors(
 
 func (c *Client) GetAuthor(
 	ctx context.Context,
-	authorId string,
+	authorID string,
 	fields ...string,
 ) (*Author, error) {
-	if strings.TrimSpace(authorId) == "" {
+	if strings.TrimSpace(authorID) == "" {
 		return nil, fmt.Errorf("author ID cannot be empty")
 	}
 
@@ -81,7 +81,7 @@ func (c *Client) GetAuthor(
 	params := url.Values{}
 	params.Set("fields", strings.Join(fields, ","))
 
-	path := "/author/" + url.PathEscape(authorId)
+	path := "/author/" + url.PathEscape(authorID)
 
 	var author Author
 
