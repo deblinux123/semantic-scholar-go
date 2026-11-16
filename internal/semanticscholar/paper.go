@@ -18,8 +18,12 @@ type PaperSearcgResponse struct {
 }
 
 type Author struct {
-	AuthorID string `json:"authorId"`
-	Name     string `json:"name"`
+	AuthorID      string `json:"authorId"`
+	Name          string `json:"name"`
+	URL           string `json:"url"`
+	PaperCount    int    `json:"paperCount"`
+	CitationCount int    `json:"citationCount"`
+	HIndex        int    `json:"hIndex"`
 }
 
 type AuthorSearchResponse struct {
