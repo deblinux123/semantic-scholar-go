@@ -208,3 +208,15 @@ func TestGetContextCancellation(t *testing.T) {
 		t.Fatalf("expected context.Cancel, got: %v", err)
 	}
 }
+
+func TestWithHTTPClient(t *testing.T) {
+	customClient := &http.Client{}
+
+	client := NewClient(
+		WithHTTPClient(customClient),
+	)
+
+	if client.httpClient != customClient {
+		t.Fatalf("custom HTTP client was not injected")
+	}
+}
