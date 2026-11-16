@@ -57,6 +57,14 @@ func WithBaseURL(baseURL string) ClientOption {
 	}
 }
 
+func WithHTTPClient(httpClient *http.Client) ClientOption {
+	return func(c *Client) {
+		if httpClient != nil {
+			c.httpCleint = httpClient
+		}
+	}
+}
+
 type APIError struct {
 	StatusCode int
 	Message    string
