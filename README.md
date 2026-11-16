@@ -3,21 +3,25 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/deblinux123/semantic-scholar-go.svg)](https://pkg.go.dev/github.com/deblinux123/semantic-scholar-go)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-A lightweight, reusable Go client for the [Semantic Scholar Academic Graph API](https://api.semanticscholar.org/api-docs/).
+A lightweight, reusable, and idiomatic Go SDK for the [Semantic Scholar Academic Graph API](https://api.semanticscholar.org/api-docs/).
 
 ## Overview
 
-Semantic Scholar Go aims to provide a clean and idiomatic Go interface for accessing academic research data.
+Semantic Scholar Go provides a simple Go interface for searching academic papers, discovering authors, and retrieving research metadata from Semantic Scholar.
+
+The SDK is designed to be reusable in CLI applications, backend services, research tools, and AI-powered RAG systems.
 
 ## Features
 
-- [ ] Paper search
-- [ ] Paper details
-- [ ] Author search and details
+- [x] Paper search
+- [x] Paper details
+- [x] Author search
+- [x] Author details
+- [x] Context-aware HTTP requests
+- [x] Configurable HTTP client
+- [x] Custom API base URL
+- [x] API error handling
 - [ ] Citation and reference retrieval
-- [ ] Paper recommendations
-- [ ] Snippet search
-- [ ] Context-aware HTTP requests
 - [ ] Rate limiting and retries
 - [ ] Redis caching
 
@@ -27,22 +31,44 @@ Semantic Scholar Go aims to provide a clean and idiomatic Go interface for acces
 go get github.com/deblinux123/semantic-scholar-go
 ```
 
+## Package
+
+```go
+import "github.com/deblinux123/semantic-scholar-go/semanticscholar"
+```
+
 ## Quick Start
 
-Coming soon.
+See the examples directory for runnable examples.
+
+## Configuration
+
+The SDK supports functional options:
+
+- `WithAPIKey` — configure your Semantic Scholar API key.
+- `WithTimeout` — configure the HTTP timeout.
+- `WithBaseURL` — configure a custom API base URL.
+- `WithHTTPClient` — inject a custom `http.Client`.
+
+An API key is optional, but Semantic Scholar may apply stricter rate limits to unauthenticated requests.
 
 ## Project Structure
 
 ```text
-cmd/          Example applications
-internal/     Internal implementation
-examples/     Usage examples
-docs/         Documentation
+semantic-scholar-go/
+├── cmd/
+├── docs/
+├── examples/
+├── semanticscholar/
+├── go.mod
+├── LICENSE
+└── README.md
 ```
 
 ## API Documentation
 
-https://api.semanticscholar.org/api-docs/
+- [Semantic Scholar API Documentation](https://api.semanticscholar.org/api-docs/)
+- [Go Package Documentation](https://pkg.go.dev/github.com/deblinux123/semantic-scholar-go/semanticscholar)
 
 ## Contributing
 
@@ -52,4 +78,4 @@ Please open an issue before submitting major changes.
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
