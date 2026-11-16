@@ -59,8 +59,10 @@ func TestGet(t *testing.T) {
 	defer server.Close()
 
 	// Create client.
-	client := NewClinet("test-api-key")
-	client.baseURL = server.URL
+	client := NewClient(
+		WithAPIKey("test-api-key"),
+		WithBaseURL(server.URL),
+	)
 
 	// Prepare request.
 	params := url.Values{}
@@ -115,8 +117,10 @@ func TestGetAPIError(t *testing.T) {
 			))
 			defer server.Close()
 
-			client := NewClinet("")
-			client.baseURL = server.URL
+			client := NewClient(
+				WithAPIKey("x-api-key"),
+				WithBaseURL(server.URL),
+			)
 
 			var result map[string]any
 
@@ -161,7 +165,9 @@ func TestGetContextCancellation(t *testing.T) {
 
 	defer server.Close()
 
-	client := NewClinet("")
+	client := NewClient(
+		WithBaseURL(server.URL),
+	)
 	client.baseURL = server.URL
 
 	ctx, cancel := context.WithCancel(

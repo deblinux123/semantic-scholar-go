@@ -22,13 +22,38 @@ type Client struct {
 	baseURL    string
 }
 
-func NewClinet(apiKey string) *Client {
-	return &Client{
+type ClientOption func(*Client)
+
+func NewClient(options ...ClientOption) *Client {
+	client := &Client{
 		httpClinet: &http.Client{
 			Timeout: DefaultTimeout,
 		},
-		apiKey:  apiKey,
 		baseURL: BaseURL,
+	}
+
+	for _, option := range options {
+		option(client)
+	}
+
+	return client
+}
+
+func WithTimeout(timeout time.Duration) ClientOption {
+	return func(c *Client) {
+		c.httpClinet.Timeout = timeout
+	}
+}
+
+func WithAPIKey(apiKey string) ClientOption {
+	return func(c *Client) {
+		c.apiKey = apiKey
+	}
+}
+
+func WithBaseURL(baseURL string) ClientOption {
+	return func(c *Client) {
+		c.baseURL = baseURL
 	}
 }
 
