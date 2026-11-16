@@ -290,3 +290,106 @@ func TestValidatePaperFields(t *testing.T) {
 		})
 	}
 }
+
+func TestGetPaper(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(
+		func(w http.ResponseWriter, r *http.Request) {
+
+			if r.Method != http.MethodGet {
+				t.Errorf("expected GET, got %s", r.Method)
+			}
+
+			if r.URL.Path != "/paper/paper-123" {
+				t.Errorf("unexpected path: %s", r.URL.Path)
+			}
+
+			if got := r.URL.Query().Get("fields"); got != "title,year,abstract" {
+				t.Errorf("unexpected fields: %s", got)
+			}
+
+			w.Header().Set("Content-Type", "application/json")
+
+			json.NewEncoder(w).Encode(Paper{
+				PaperID: "paper-123",
+				Title:   "Learning Go",
+				Year:    2025,
+			})
+		},
+	))
+	defer server.Close()
+
+	client := NewClient(WithBaseURL(server.URL))
+
+	paper, err := client.GetPaper(
+		context.Background(),
+		"paper-123",
+		"title",
+		"year",
+		"abstract",
+	)
+
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+
+	if paper.PaperID != "paper-123" {
+		t.Errorf("unexpected paper ID: %s", paper.PaperID)
+	}
+
+	if paper.Title != "Learning Go" {
+		t.Errorf("unexpected title: %s", paper.Title)
+	}
+
+	if paper.Year != 2025 {
+		t.Errorf("unexpected year: %d", paper.Year)
+	}
+}
+
+func TestGetPaperEmptyID(t *testing.T) {
+	client := NewClient()
+
+	_, err := client.GetPaper(
+		context.Background(),
+		"   ",
+	)
+
+	if err == nil {
+		t.Fatal("expected error for empty paper ID")
+	}
+}
+
+func TestGetPaperNotFound(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(
+		func(w http.ResponseWriter, r *http.Request) {
+			http.Error(
+				w,
+				`{"error":"Paper not found"}`,
+				http.StatusNotFound,
+			)
+		},
+	))
+	defer server.Close()
+
+	client := NewClient(WithBaseURL(server.URL))
+
+	_, err := client.GetPaper(
+		context.Background(),
+		"unknown-paper",
+	)
+
+	if err == nil {
+		t.Fatal("expected 404 error, got nil")
+	}
+
+	apiErr, ok := err.(*APIError)
+	if !ok {
+		t.Fatalf("expected *APIError, got %T", err)
+	}
+
+	if apiErr.StatusCode != http.StatusNotFound {
+		t.Errorf(
+			"expected status 404, got %d",
+			apiErr.StatusCode,
+		)
+	}
+}

@@ -91,3 +91,43 @@ func validatePaperFields(fileds []string) error {
 
 	return nil
 }
+
+func (c *Client) GetPaper(
+	ctx context.Context,
+	paperId string,
+	fields ...string,
+) (*Paper, error) {
+	if strings.TrimSpace(paperId) == "" {
+		return nil, fmt.Errorf("paper ID cannot be empty.")
+	}
+
+	if len(fields) == 0 {
+		fields = []string{
+			"paperId",
+			"title",
+			"abstract",
+			"year",
+			"url",
+			"venue",
+			"citationCount",
+			"authors",
+		}
+	}
+
+	if err := validatePaperFields(fields); err != nil {
+		return nil, err
+	}
+
+	params := url.Values{}
+	params.Set("fields", strings.Join(fields, ","))
+
+	var paper Paper
+
+	path := "/paper/" + url.PathEscape(paperId)
+
+	if err := c.get(ctx, path, params, &paper); err != nil {
+		return nil, err
+	}
+
+	return &paper, nil
+}
